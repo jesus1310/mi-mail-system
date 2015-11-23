@@ -7,27 +7,45 @@
  */
 public class MailClient
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
+    // Artibuto que controla un objeto de la clase MailServer
+    private MailServer server;
+    // Atributo que controla una cadena que contiene los datos del usuario
+    private String user;
+    
     /**
      * Constructor for objects of class MailClient
      */
-    public MailClient()
+    public MailClient(MailServer nuevoServidor,String nuevoUsuario)
     {
-        // initialise instance variables
-        x = 0;
+        server = nuevoServidor;
+        user = nuevoUsuario;
     }
-
+    
     /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Método que recupera del servidor el siguiente correo
      */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public MailItem getNextMailItem(){
+        return server.getNextMailItem(user);
+    }
+    
+    /**
+     * Método que imprime el mensaje por pantalla
+     */
+    public void printNextMailItem(){
+        if (server.howManyMailItems(user) > 0){
+            MailItem correo = server.getNextMailItem(user);
+            correo.printMail();
+        }
+        else{
+            System.out.println("No hay mensajes");
+        }
+    }
+    
+    /**
+     * Método que permite crear y enviar un mensaje
+     */
+    public void sendMailItem(String para,String mensaje){
+        MailItem email = new MailItem(user,para,mensaje);
+        server.post(email);
     }
 }

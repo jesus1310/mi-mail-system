@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class MailItem here.
  * 
@@ -7,27 +6,54 @@
  */
 public class MailItem
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    // Atributo que controla el emisor del mensaje
+    private String from;
+    // Atributo que controla el receptor del mensaje
+    private String to;
+    // Atributo que controla el mensaje
+    private String message;
 
     /**
      * Constructor for objects of class MailItem
      */
-    public MailItem()
+    public MailItem(String de, String para, String mensaje)
     {
-        // initialise instance variables
-        x = 0;
+        from = de;
+        to = para;
+        message = mensaje;
     }
-
+    
     /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Método que devuelve la cadena almacenada en from
      */
-    public int sampleMethod(int y)
+    public String getFrom()
     {
-        // put your code here
-        return x + y;
+        return from;
+    }
+    
+    /**
+     * Método que devuelve la cadena almacenada en from
+     */
+    public String getTo()
+    {
+        return to;
+    }
+    
+    /**
+     * Método que devuelve la cadena almacenada en from
+     */
+    public String getMessage()
+    {
+        return message;
+    }
+    
+    /**
+     * Método que imprime por pantalla los 3 atributos creados con sus valores fijados
+     */
+    public void printMail()
+    {
+        System.out.println ("From: " + from);
+        System.out.println ("To: " + to);
+        System.out.println ("Text: " + message);
     }
 }
