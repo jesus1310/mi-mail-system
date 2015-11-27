@@ -54,4 +54,11 @@ public class MailClient
         MailItem email = new MailItem(user,to,subject,message);
         server.post(email);
     }
+    
+    /**
+     * Método que permite saber cuántos correos tiene en el servidor cada usuario sin descargarlos.
+     */
+    public void howManyMail(){
+        System.out.println("Tienes " + server.howManyMailItems(user) + " correo/s");
+    }
 }
