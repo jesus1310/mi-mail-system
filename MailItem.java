@@ -51,6 +51,14 @@ public class MailItem
     }
     
     /**
+     * Método que devuelve la cadena almacenada en subject
+     */
+    public String getSubject()
+    {
+        return subject;
+    }
+    
+    /**
      * Método que imprime por pantalla los 3 atributos creados con sus valores fijados
      */
     public void printMail()

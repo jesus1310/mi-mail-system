@@ -10,6 +10,8 @@ public class MailClient
     private MailServer server;
     // Atributo que controla una cadena que contiene los datos del usuario
     private String user;
+    // Atributo que guarda el último mensaje que se ha descargado del servidor
+    private MailItem lastMail;
     
     /**
      * Constructor for objects of class MailClient
@@ -26,7 +28,9 @@ public class MailClient
      */
     public MailItem getNextMailItem(){
         // En este método se invoca el método para mostrar el siguiente mensaje almacenado en el objeto de la clase MailServer.
-        return server.getNextMailItem(user);
+        MailItem nextItem = server.getNextMailItem(user);
+        lastMail = nextItem;
+        return nextItem;
     }
     
     /**
@@ -40,6 +44,7 @@ public class MailClient
         if (server.howManyMailItems(user) > 0){
             MailItem correo = server.getNextMailItem(user);
             correo.printMail();
+            lastMail = correo;
         }
         else{
             System.out.println("No hay mensajes");
@@ -60,5 +65,31 @@ public class MailClient
      */
     public void howManyMail(){
         System.out.println("Tienes " + server.howManyMailItems(user) + " correo/s");
+    }
+    
+    /**
+     * Método que recupera el siguiente correo del servidor y genera una respuesta automática.
+     */
+    public void getNextMailItemAutomaticRespond(){
+        MailItem mail = getNextMailItem();
+        if (mail != null){
+            String newSubject = "RE: " + mail.getSubject();
+            String answer = "Estoy fuera de la oficina \n\n" + "Original message: " + mail.getMessage();
+            MailItem autoRespond = new MailItem(user,mail.getFrom(),newSubject,answer);
+            server.post(autoRespond);
+            lastMail = mail;
+        }
+    }
+    
+    /**
+     * Método que muestra por pantalla el último correo descargado
+     */
+    public void printLast(){
+        if (lastMail != null){
+            lastMail.printMail();
+        }
+        else{
+            System.out.println("No se ha recibido ningún mensaje");
+        }
     }
 }
