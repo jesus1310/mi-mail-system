@@ -10,17 +10,20 @@ public class MailItem
     private String from;
     // Atributo que controla el receptor del mensaje
     private String to;
+    // Atributo que controla el asunto del mensaje
+    private String subject;
     // Atributo que controla el mensaje
     private String message;
 
     /**
      * Constructor for objects of class MailItem
      */
-    public MailItem(String de, String para, String mensaje)
+    public MailItem(String from, String to, String subject, String message)
     {
-        from = de;
-        to = para;
-        message = mensaje;
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.message = message;
     }
     
     /**
@@ -32,7 +35,7 @@ public class MailItem
     }
     
     /**
-     * Método que devuelve la cadena almacenada en from
+     * Método que devuelve la cadena almacenada en to
      */
     public String getTo()
     {
@@ -40,7 +43,7 @@ public class MailItem
     }
     
     /**
-     * Método que devuelve la cadena almacenada en from
+     * Método que devuelve la cadena almacenada en message
      */
     public String getMessage()
     {
@@ -54,6 +57,7 @@ public class MailItem
     {
         System.out.println ("From: " + from);
         System.out.println ("To: " + to);
+        System.out.println ("Subject: " + subject);
         System.out.println ("Text: " + message);
     }
 }

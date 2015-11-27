@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class MailClient here.
  * 
@@ -15,16 +14,18 @@ public class MailClient
     /**
      * Constructor for objects of class MailClient
      */
-    public MailClient(MailServer nuevoServidor,String nuevoUsuario)
+    public MailClient(MailServer server,String user)
     {
-        server = nuevoServidor;
-        user = nuevoUsuario;
+        // Definimos las variables del constructor y se asignan sus valores iniciales con parámetros.
+        this.server = server;
+        this.user = user;
     }
     
     /**
      * Método que recupera del servidor el siguiente correo
      */
     public MailItem getNextMailItem(){
+        // En este método se invoca el método para mostrar el siguiente mensaje almacenado en el objeto de la clase MailServer.
         return server.getNextMailItem(user);
     }
     
@@ -32,6 +33,10 @@ public class MailClient
      * Método que imprime el mensaje por pantalla
      */
     public void printNextMailItem(){
+        // El método howManyMailItems nos devuelve un entero que indica el número de mensajes que tiene el usuario indicado por parámetro.
+        // Si ese número es mayor que 0 se invoca el método getNextMailItem del objeto server sobre un objeto de la clase MailItem.
+        // Se imprime el contenido del objeto de la clase MailItem.
+        // Si es igual a 0, se indica por pantalla que no hay mensajes.
         if (server.howManyMailItems(user) > 0){
             MailItem correo = server.getNextMailItem(user);
             correo.printMail();
@@ -44,8 +49,9 @@ public class MailClient
     /**
      * Método que permite crear y enviar un mensaje
      */
-    public void sendMailItem(String para,String mensaje){
-        MailItem email = new MailItem(user,para,mensaje);
+    public void sendMailItem(String to,String subject,String message){
+        // Se crea un objeto de la clase MailItem en el que se indicará a quién va dirigido y el mensaje, y se añade al server con el método post.
+        MailItem email = new MailItem(user,to,subject,message);
         server.post(email);
     }
 }
