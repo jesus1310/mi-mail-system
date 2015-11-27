@@ -29,7 +29,9 @@ public class MailClient
     public MailItem getNextMailItem(){
         // En este método se invoca el método para mostrar el siguiente mensaje almacenado en el objeto de la clase MailServer.
         MailItem nextItem = server.getNextMailItem(user);
-        lastMail = nextItem;
+        if (nextItem != null){
+            lastMail = nextItem;
+        }
         return nextItem;
     }
     
