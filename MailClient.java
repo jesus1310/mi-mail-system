@@ -78,8 +78,8 @@ public class MailClient
         // Si ese número es mayor que 0 se invoca el método getNextMailItem del objeto server sobre un objeto de la clase MailItem.
         // Se imprime el contenido del objeto de la clase MailItem.
         // Si es igual a 0, se indica por pantalla que no hay mensajes.
-        MailItem correo = getNextMailItem();
         if (server.howManyMailItems(user) > 0){
+            MailItem correo = getNextMailItem();
             if (spam == false){
                 correo.printMail();
                 lastMail = correo;
@@ -166,5 +166,13 @@ public class MailClient
         else{
             System.out.println("No se ha recibido spam");
         }
+    }
+    
+    /**
+     * Método que envía mensajes con fallo de transmision
+     */
+    public void sendMailItemWithTransmissionError(String to,String subject,String message){
+        message = message.replace("o","#o").replace("i","$i");
+        sendMailItem(to,subject,message);
     }
 }
