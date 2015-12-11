@@ -64,6 +64,14 @@ public class MailServer
      */
     public void post(MailItem item)
     {
-        items.add(item);
+        int longitudMensaje = item.getMessage().length();
+        String mensaje = item.getMessage();
+        if (mensaje.contains("#o") || mensaje.contains("$i")){
+            mensaje = mensaje.replace("#o","o").replace("$i","i");
+        }
+        int longitudModificada = mensaje.length();
+        if (longitudMensaje == longitudModificada){
+            items.add(item);
+        }
     }
 }
