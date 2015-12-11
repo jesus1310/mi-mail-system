@@ -24,6 +24,8 @@ public class MailClient
     private String longestMessageEmitter;
     // Atributo que guarda el cuerpo del mensaje recibido que más caracteres tiene
     private String longest;
+    // Atributo que guarda el último mensaje spam
+    private MailItem lastSpam;
 
     /**
      * Constructor for objects of class MailClient
@@ -43,6 +45,10 @@ public class MailClient
         // En este método se invoca el método para mostrar el siguiente mensaje almacenado en el objeto de la clase MailServer.
         MailItem nextItem = server.getNextMailItem(user);
         if (nextItem != null){
+            if (nextItem.getMessage().length() > longest.length()){
+                longest = nextItem.getMessage();
+                longestMessageEmitter = nextItem.getFrom();
+            }
             if (nextItem.getMessage().contains("trabajo")){
                 spam = false;
                 lastMail = nextItem;
@@ -50,6 +56,7 @@ public class MailClient
             else{
                 if ((nextItem.getMessage().contains("regalo") || nextItem.getMessage().contains("promocion"))){
                     spam = true;
+                    lastSpam = nextItem;
                     nextItem = null;
                     countSpam = countSpam + 1;
                 }
@@ -57,10 +64,6 @@ public class MailClient
                     spam = false;
                     lastMail = nextItem;
                 }
-            }
-            if (nextItem.getMessage().length() > longest.length()){
-                longest = nextItem.getMessage();
-                longestMessageEmitter = nextItem.getFrom();
             }
             countReceived = countReceived + 1;
         }
@@ -88,7 +91,6 @@ public class MailClient
         else{
             System.out.println("No hay mensajes");
         }
-        countReceived = countReceived + 1;
     }
 
     /**
@@ -122,7 +124,6 @@ public class MailClient
                 lastMail = mail;
             }
         }
-        countReceived = countReceived + 1;
         countSent = countSent + 1;
     }
 
@@ -146,12 +147,24 @@ public class MailClient
         System.out.println("Recibidos: " + countReceived);
         System.out.println("Enviados: " + countSent);
         System.out.println("Spam: " + countSpam);
-        if (countReceived > 0){
-            System.out.println("Porcentaje de spam: " + (countSpam/countReceived)*100);
+        if (countSpam > 0){
+            System.out.println("Porcentaje de spam: " + (countSpam/countReceived)*100 + "%");
         }
         else{
             System.out.println("Porcentaje de spam: 0%");
         }
         System.out.println("Destinatario: " + longestMessageEmitter + ", longitud: " + longest.length());
+    }
+    
+    /**
+     * Método para obtener los datos del último mensaje de spam recibido
+     */
+    public void showInfoLastSpam(){
+        if (countSpam > 0){
+            lastSpam.printMail();
+        }
+        else{
+            System.out.println("No se ha recibido spam");
+        }
     }
 }
